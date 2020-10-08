@@ -18,7 +18,7 @@ Resources:
       Source: # Uses the source credential from account-wide-resources
         Type: GITHUB
         Location: !Ref SourceLocation
-        BuildSpec: ci-buildspec.yaml # similar to the build steps in TeamCity
+        BuildSpec: automation/ci-buildspec.yaml # similar to the build steps in TeamCity
       Triggers:
         Webhook: true
       ServiceRole: !Ref CodeBuildRole # if you need to more than build and log, add more permissions here
