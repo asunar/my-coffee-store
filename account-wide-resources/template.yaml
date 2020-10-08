@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Account-wide resources, as used by Coffee Store.
+  See https://github.com/symphoniacloud/coffee-store/tree/main/account-wide-resources
+
+
+Parameters:
+  GithubPersonalAccessToken:
+    Type: String
+    NoEcho: true
+
+Outputs:
+  CloudformationArtifactsBucket:
+    Value: !Ref CloudformationArtifactsBucket
+    Export:
+      Name: CloudformationArtifactsBucket
+
+Resources:
+  CloudformationArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'cloudformation-artifacts-${AWS::AccountId}-${AWS::Region}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - ExpirationInDays: 7
+            Status: Enabled
+
+  GithubToken:
+    Type: AWS::SecretsManager::Secret
+    Properties: 
+      Description: Github Personal Access Token, e.g. for CodeBuild / CodePipeline
+      Name: github-token
+      SecretString: !Ref GithubPersonalAccessToken
+
+  GithubCredentialsForCodeBuild:
+    Type: AWS::CodeBuild::SourceCredential
+    DependsOn: GithubToken
+    Properties: 
+      Token: '{{resolve:secretsmanager:github-token}}'
+      ServerType: GITHUB
+      AuthType: PERSONAL_ACCESS_TOKEN
