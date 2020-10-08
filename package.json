@@ -6,6 +6,8 @@
         "jest": "^24.7.1"
     },
     "scripts": {
-        "test": "jest"
+        "test": "npm run unit-test && npm run integration-test",
+        "unit-test": "jest --config __tests__/jest-unit.config.js",
+        "integration-test": "jest --config __tests__/jest-integration.config.js"
     }
 }
