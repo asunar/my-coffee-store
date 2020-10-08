@@ -8,12 +8,6 @@ Resources:
       Events:
         HttpEvent:
           Type: HttpApi
-      InlineCode: |
-        exports.handler = async function (event) {
-          return {
-            statusCode : 200,
-            body : "Hello World again!"
-          };
-        };
-      Handler: index.handler
+      CodeUri: src/
+      Handler: api.handler
       Runtime: nodejs12.x
