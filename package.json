@@ -3,11 +3,13 @@
     "version": "0.0.2",
     "private": true,
     "devDependencies": {
-        "jest": "^24.7.1"
+        "@jest/globals": "26.x",
+        "jest": "^24.7.1",
+        "aws-sdk": "2.x"
     },
     "scripts": {
         "test": "npm run unit-test && npm run integration-test",
         "unit-test": "jest --config __tests__/jest-unit.config.js",
-        "integration-test": "jest --config __tests__/jest-integration.config.js"
+        "integration-test": "AWS_PROFILE=personal AWS_SDK_LOAD_CONFIG=true jest --config __tests__/jest-integration.config.js"
     }
 }
