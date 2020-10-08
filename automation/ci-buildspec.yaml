@@ -7,4 +7,6 @@ phases:
   build:
     commands:
       - npm install
+  post_build:
+    commands:
       - npm test
