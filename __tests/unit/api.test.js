@@ -6,7 +6,7 @@ describe('Test Web API handler', () => {
 
         const expectedResult = {
             statusCode: 200,
-            body: "Hello world episode 3!"
+            body: "Hello world episode 2!"
         };
 
         expect(result).toEqual(expectedResult)
