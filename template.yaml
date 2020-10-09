@@ -1,13 +1,18 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
+Outputs:
+  HttpApi:
+    # This is the ID of the implicit API gateway defined by SAM
+    # because we have an event of type HttpApi
+    Value: !Ref ServerlessHttpApi
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
       Events:
         HttpEvent:
-          Type: HttpApi
+          Type: HttpApi # This instructs SAM to create an API Gateway whose ID is ServerlessHttpApi  
       CodeUri: src/
       Handler: api.handler
       Runtime: nodejs12.x

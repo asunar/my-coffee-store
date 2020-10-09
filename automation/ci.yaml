@@ -2,6 +2,8 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: CI Automation for Coffee Store
 
 Parameters:
+  CloudformationArtifactsBucket:
+    Type: String
   SourceLocation:
     Type: String
     Default: https://github.com/asunar/my-coffee-store.git
@@ -46,7 +48,14 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - logs:CreateLogGroup
-                  - logs:CreateLogStream
-                  - logs:PutLogEvents
+                  - logs:*
+                  - lambda:*
+                  - apigateway:*
+                  - cloudformation:*
+                  - iam:*
                 Resource: '*'
+              - Effect: Allow
+                  Action: s3:*
+                  Resource:
+                    - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}'
+                    - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}/*'

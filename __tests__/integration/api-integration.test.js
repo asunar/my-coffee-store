@@ -5,13 +5,19 @@ const
 let apiEndpoint
 
 beforeAll(async () => {
-    const apiName = process.env.hasOwnProperty('API_NAME') ? process.env['API_NAME'] : 'sam-app'
-    console.log(`Looking for API Gateway named [${apiName}]`)
+    const stackName = `coffee-store-${process.env['USER']}`
+    console.log(`Looking for API Gateway in stack [${stackName}]`)
 
+    // Get all the details for our stack
+    const cloudFormationStacks = await new AWS.CloudFormation().describeStacks({StackName: stackName}).promise()
+
+    const apiId = cloudFormationStacks
+                    .Stacks[0]
+                    .Outputs
+                    .find(output => output.OutputKey == 'HttpApi')
+                    .OutputValue
     const apis = await new AWS.ApiGatewayV2().getApis().promise()
-
-    const apiEndpoints = apis.Items
-    apiEndpoint = apis.Items.find(api => api.Name === apiName).ApiEndpoint
+    apiEndpoint = apis.Items.find(api => api.ApiId === apiId).ApiEndpoint
     console.log(`Using Coffee Store API at [${apiEndpoint}]`)
 })
 
