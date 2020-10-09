@@ -55,7 +55,7 @@ Resources:
                   - iam:*
                 Resource: '*'
               - Effect: Allow
-                  Action: s3:*
-                  Resource:
-                    - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}'
-                    - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}/*'
+                Action: s3:*
+                Resource:
+                  - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}'
+                  - !Sub 'arn:aws:s3:::${CloudformationArtifactsBucket}/*'
