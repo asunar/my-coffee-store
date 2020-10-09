@@ -10,7 +10,7 @@ fi
 
 CLOUDFORMATION_ARTIFACTS_BUCKET=$(aws cloudformation list-exports --query "Exports[?Name==\`CloudformationArtifactsBucket\`].Value" --output text) 
 
-sam.cmd deploy \
+sam deploy \
     --stack-name $STACK_NAME \
     --s3-bucket $CLOUDFORMATION_ARTIFACTS_BUCKET \
     --template-file template.yaml \
