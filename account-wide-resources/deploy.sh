@@ -11,7 +11,7 @@ fi
 
 set -euo pipefail
 
-sam.cmd deploy \
+sam deploy \
     --stack-name account-wide-resources \
     --parameter-overrides GithubPersonalAccessToken=$1 \
     --template-file template.yaml \

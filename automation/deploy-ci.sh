@@ -11,7 +11,7 @@ fi
 
 STACK_NAME=coffee-store-ci
 
-sam.cmd deploy \
+sam deploy \
         --stack-name $STACK_NAME \
         --template-file ci.yaml \
         --capabilities CAPABILITY_IAM \
