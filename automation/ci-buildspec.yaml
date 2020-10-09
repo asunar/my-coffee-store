@@ -7,7 +7,7 @@ phases:
   build:
     commands:
       - npm install
-      - ./deploy.sh coffee-store-ci-test
+      - ./deploy.sh coffee-store-ci-test #make deploy.sh executable before committing.
   post_build:
     commands:
       - STACK_NAME=coffee-store-ci-test npm run test
