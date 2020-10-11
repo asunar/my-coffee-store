@@ -10,6 +10,6 @@
     "scripts": {
         "test": "npm run unit-test && npm run integration-test",
         "unit-test": "jest --config __tests__/jest-unit.config.js",
-        "integration-test": "AWS_PROFILE=personal AWS_SDK_LOAD_CONFIG=true jest --config __tests__/jest-integration.config.js"
+        "integration-test": "AWS_SDK_LOAD_CONFIG=true jest --config __tests__/jest-integration.config.js"
     }
 }
