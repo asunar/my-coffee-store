@@ -1,6 +1,6 @@
 #! /bin/sh
 
-set -euo pipefail 
+#set -euo pipefail 
 
 if [ "$#" -gt 0 ]; then
     STACK_NAME=$1
