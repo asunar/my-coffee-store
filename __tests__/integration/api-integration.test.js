@@ -11,16 +11,19 @@ let stackName
 let apiEndpoint
 
 beforeAll(async () => {
-    // const stackName = process.env.hasOwnProperty('STACK_NAME')
-    //     ? process.env['STACK_NAME']
-    //     : `coffee-store-${process.env['USER']}`
-    // console.log(`Looking for API Gateway in stack [${stackName}]`)
+    stackName = isUsingEphemeralStack ? generateEphemeralStackName() : process.env['STACK_NAME']  
 
-    stackName = generateEphemeralStackName();   
-    console.log('Starting cloudformation deployment of stack', stackName)
-    const { stdout } = await exec(`./deploy.sh ${stackName}`)
-    console.log('Deployment finished')
-    console.log(stdout)
+    if(isUsingEphemeralStack){
+        console.log('Starting cloudformation deployment of stack', stackName)
+        const { stdout } = await exec(`./deploy.sh ${stackName}`)
+        console.log('Deployment finished')
+        console.log(stdout)        
+    }
+    else {
+        console.log(`Using existing stack ${stackName} as application target`)
+    }
+
+
 
     // Get all the details for our stack
     const cloudFormationStacks = await new AWS.CloudFormation().describeStacks({StackName: stackName}).promise()
@@ -72,6 +75,12 @@ function getWithBody(url) {
     }
 
 afterAll(async () => {
-    console.log('Calling cloudformation to delete stack', stackName)
-    await cloudFormation.deleteStack( { StackName: stackName }).promise()
+    if(isUsingEphemeralStack) {
+        console.log('Calling cloudformation to delete stack', stackName)
+        await cloudFormation.deleteStack( { StackName: stackName }).promise()        
+    }
+    else {
+        console.log(`Leaving stack ${stackName} as deployed`)
+    }
+
 })
